@@ -8,7 +8,9 @@ into a **live, reproducible, per-gap-attributed metric.**
 
 **▶ Live demo (no install):** https://claude.ai/code/artifact/4fb63ba8-ae81-4e32-b52f-9fdb1d8b78bb —
 a self-contained build (`site/index.html`) that replays the real Claude tool-use run entirely in the
-browser, so the 75% → 100% jump is one click away with nothing to boot.
+browser, so the 75% → 100% jump is one click away with nothing to boot. The Artifact is private until
+shared from its page; if the link asks for access, clone the repo and run `open site/index.html` — the
+same file opens directly with no server.
 
 ## The magic moment
 

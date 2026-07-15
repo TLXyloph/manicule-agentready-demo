@@ -404,7 +404,8 @@ function paintDots(which, res) {
     dot.classList.remove("pass", "fail");
     dot.classList.add(t.passed ? "pass" : "fail");
     if (which === "fixed") {
-      const wasFail = state.gapped && !state.gapped.tasks.find((x) => x.id === t.id)?.passed;
+      const prev = state.gapped && state.gapped.tasks.find((x) => x.id === t.id);
+      const wasFail = prev ? !prev.passed : false;
       if (wasFail && t.passed && !reduce) $(`#task-${t.id}`).classList.add("flip");
     }
   }
