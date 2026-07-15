@@ -2,7 +2,7 @@
   "company": "Manicule",
   "company_url": "https://manicule.dev/",
   "run_id": "manicule-agentready-2026-07-14",
-  "generated_at": "2026-07-15T02:40:00Z",
+  "generated_at": "2026-07-14T19:12:00Z",
   "repo_url": "https://github.com/TLXyloph/manicule-agentready-demo",
   "pr_url": "https://github.com/TLXyloph/manicule-agentready-demo/pull/2",
   "visibility": "public",
@@ -19,16 +19,17 @@
   ],
   "gate": {
     "tool": "no-mistakes",
-    "run_id": "01KXHN9792C27AE2Q3D9HHC92J",
+    "run_id": "01KXHQCBT0W35HA69C4K9MKD71",
     "outcome": "checks-passed",
     "pr": "https://github.com/TLXyloph/manicule-agentready-demo/pull/2",
+    "head": "10a488e8",
     "steps_passed": ["intent", "rebase", "review", "test", "document", "lint", "push", "pr", "ci"],
-    "tests": "11 passed (pytest, keyless smoke test asserts gapped < 100% and fixed == 100%)",
+    "tests": "12 passed (pytest, keyless smoke test now asserts gapped == 75% with exactly 3 failures — auth/filter/cursor — each attributed to a named gap, and fixed == 100%)",
     "auto_fixes": [
-      "review: corrected site/index.html doc-path references from the logical 'docs/api-reference.md' to the actual bundled 'docs_gapped/api-reference.md'",
-      "document: synced DEMO_GUIDE setup notes with the new live_url / site build"
+      "review: fixed a stale '8/8' task count in DEMO_GUIDE and clarified the verify_credentials auth-checker docstring",
+      "document: synced README and DEMO_GUIDE with the new 3-fail / 75% (9/12) suite"
     ],
-    "note": "This run validates the static-live-build change (site/index.html + README + RUN_REPORT). CI returned checks-passed: the repo has no GitHub Actions workflow, so the monitor found no required checks and cleared green. PR #2 is open and ready for review/merge. The prior assets run was 01KXHKBQ3ZT60SV2A5D1735ZGR (PR #1, merged)."
+    "note": "This run validates the three-gap upgrade: the previously-dormant 'auth-header-contradiction' gap is now a live, attributed failure (verify_credentials task -> Bearer 401), so the demo matches its own marketing copy — three named gaps (auth, filter, cursor), a clean 75% (9/12) -> 100% (12/12) jump. Evidence PNGs in evidence/ were regenerated (headless Chrome) against the 12-task site. CI returned checks-passed: the repo has no GitHub Actions workflow, so the monitor found no required checks and cleared green. PR #2 is open and ready for review/merge. Prior runs: 01KXHN9792C27AE2Q3D9HHC92J (static-live-build) and 01KXHKBQ3ZT60SV2A5D1735ZGR (PR #1, merged)."
   },
   "secrets_scan": "clean — no secrets in diff; .env and _local/ are git-ignored and untracked; only placeholder sk-ant-xxxx in .env.example",
   "assets": {
