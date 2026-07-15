@@ -1,0 +1,59 @@
+{
+  "input": {
+    "url": "https://manicule.dev/",
+    "company": "Manicule",
+    "run_id": "manicule-agentready-2026-07-14",
+    "timestamp": "2026-07-14T00:00:00Z"
+  },
+  "wedge": {
+    "chosen": "AgentReady harness — a live, reproducible 'agent task-success rate' metric that attributes each agent failure to a specific doc gap, and shows a before/after jump when the gap is patched.",
+    "runner_ups": [
+      "Agent-driven code-snippet verifier that runs every doc code sample against a live API and flags failures",
+      "GEO surface-area scorer that rates how discoverable/citable docs are to AI models"
+    ],
+    "scores": { "value": 5, "buildability": 4, "wow": 5, "operator_fit": 5 },
+    "rationale": "Turns Manicule's marketing slogan ('agents perform no errors with our approach vs failing 25% of the time') into a live, per-gap-attributed metric — exactly the AgentRel thesis, and shows off agentic-AI harness engineering."
+  },
+  "spec": {
+    "magic_moment": "On one screen, a real Claude tool-use agent is turned loose on a bundled synthetic API's docs and attempts a suite of concrete developer tasks. On the FIRST run against the deliberately-gapped docs, the AgentReady harness reports a task-success rate of ~70-75% and traces each of the ~25% failures to a specific missing or contradictory doc section. You click 'Apply doc patch,' which fills exactly those gaps, and re-run: the same agent now completes the task suite at ~100%. The before/after success-rate number climbs live, and each fixed failure flips from red to green.",
+    "in_scope": [
+      "A single bundled synthetic REST API (MemStore) served by a local mock server with a real OpenAPI spec",
+      "Two docs fixtures: docs_gapped/ (deliberately missing/contradictory) and docs_fixed/ (complete)",
+      "A task suite of ~8-12 concrete natural-language developer tasks",
+      "A real Claude tool-use agent loop that reads ONLY provided docs, calls the mock API via a tool, self-reports; a deterministic checker validates real API side effects",
+      "A scoring + gap-attribution engine (rule-based + LLM-judge)",
+      "A web dashboard: task grid, success-rate meter, per-failure gap traces, Apply-doc-patch / Re-run controls",
+      "A deterministic replay/cache mode"
+    ],
+    "out_of_scope": [
+      "Real customer docs/codebase/Discord/tickets",
+      "Crawling real third-party or production APIs",
+      "Real PHI/PII/financial data",
+      "Auto-writing the doc fix with an LLM (fix is a pre-authored fixture swap)",
+      "Multi-model/multi-provider agent support",
+      "User accounts, billing, multi-tenant",
+      "Arbitrary uploaded OpenAPI specs",
+      "GEO/SEO scoring, screenshots, video"
+    ],
+    "stack": [
+      "Python 3.11 + FastAPI (mock MemStore API + harness backend, uvicorn)",
+      "Anthropic Python SDK for the tool-use agent loop; API key via .env",
+      "SQLite / in-memory dict for the mock store",
+      "OpenAPI 3 spec file",
+      "Vanilla JS + fetch dashboard served by FastAPI",
+      "pytest for checkers + smoke test",
+      "JSON fixtures for docs, task suite, cached replay"
+    ]
+  },
+  "smoke_condition": "The full pipeline runs end-to-end: the Claude tool-use agent, reading only docs_gapped/, executes the task suite against the local mock API and scores strictly below 100% (at least 2 tasks fail), each failure is attributed to a named doc gap, and after swapping to docs_fixed/ the same agent re-runs and scores ~100% with all previously-failing tasks turning green — the before/after success-rate jump and per-gap traces are visible on the dashboard, and the pytest smoke test asserting gapped < 100% and fixed == 100% exits 0.",
+  "profile": {
+    "product": "Manicule (YC P26, founded 2025 by Naman Bansal and Shreyans Jain) is a technical documentation studio / DevRel-as-a-service for developer-tool startups, pivoting toward 'AgentRel' — optimizing docs for discovery and correct use by AI agents. 7-step pipeline: Audit -> Information Architecture -> Writing+Review -> Code Verification -> Videos+Screenshots -> Final Push -> Creative Direction.",
+    "key_claim": "agents perform no errors while using our approach vs failing 25% of the time with other frameworks",
+    "positioning": "Humans Do the Thinking, Agents Do the Scale Work; twice as fast with AI and half the cost of hiring a DevRel; ship in <2 weeks",
+    "supermemory_case": "SQL-based metadata filtering was an undocumented feature discovered from the codebase; +30% answer success rate; 23-day turnaround; killed 70% of confusion with a 'zero to aha' journey",
+    "founders": ["Naman Bansal (CEO) @namanbansal0611", "Shreyans Jain @shreyansj"],
+    "contacts": ["founders@manicule.dev", "team@manicule.dev", "https://x.com/manicule"],
+    "clients": ["Supermemory", "Greptile", "Reducto", "Rootly", "Promptlayer", "Skyvern", "Mastra"],
+    "tech_signals": "Free 7-minute Audit tool; agents draft from OpenAPI specs + SDK definitions; docs on Mintlify; Content Engineer role owns 'prompts, evals, the harness around them'; 'Agent error rate: 0% vs 25% with competing frameworks'"
+  }
+}

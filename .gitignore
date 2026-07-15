@@ -1,0 +1,25 @@
+# Local-only outreach assets — never committed
+_local/
+
+# Secrets
+.env
+*.pem
+*.key
+*secret*
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+
+# Local mock DB
+*.sqlite
+*.db
+memstore.db
+
+# OS
+.DS_Store
