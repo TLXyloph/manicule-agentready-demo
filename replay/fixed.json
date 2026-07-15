@@ -1,0 +1,95 @@
+{
+  "_comment": "Recorded run of the same agent against docs_fixed/. The completed docs expose the `filter` param and `next_cursor` pagination, so every task now passes. Executed for real against a fresh seeded MemStore by the harness.",
+  "variant": "fixed",
+  "model": "claude-sonnet-4-5",
+  "runs": {
+    "create_reports": {
+      "calls": [
+        {"method": "POST", "path": "/v1/collections", "headers": {"X-MemStore-Key": "ms_live_demo_key_2026"}, "body": {"name": "reports"}}
+      ],
+      "answer": "Created collection 'reports'.",
+      "transcript": [
+        {"role": "assistant", "content": "POST /v1/collections {name: reports} with the X-MemStore-Key header."},
+        {"role": "tool", "content": "201 {\"name\": \"reports\", \"created\": true}"}
+      ]
+    },
+    "create_archive": {
+      "calls": [
+        {"method": "POST", "path": "/v1/collections", "headers": {"X-MemStore-Key": "ms_live_demo_key_2026"}, "body": {"name": "archive"}}
+      ],
+      "answer": "Created collection 'archive'.",
+      "transcript": [
+        {"role": "assistant", "content": "POST /v1/collections {name: archive}."},
+        {"role": "tool", "content": "201 {\"name\": \"archive\", \"created\": true}"}
+      ]
+    },
+    "store_invoice": {
+      "calls": [
+        {"method": "POST", "path": "/v1/collections/reports/documents", "headers": {"X-MemStore-Key": "ms_live_demo_key_2026"}, "body": {"content": "Invoice #2001 for Manicule — DevRel retainer.", "metadata": {"category": "invoice", "amount": 4200, "status": "unpaid"}}}
+      ],
+      "answer": "Stored invoice #2001 in 'reports'.",
+      "transcript": [
+        {"role": "assistant", "content": "Storing the invoice document with its metadata."},
+        {"role": "tool", "content": "201 {\"id\": \"doc_0025\", ...}"}
+      ]
+    },
+    "store_note": {
+      "calls": [
+        {"method": "POST", "path": "/v1/collections/reports/documents", "headers": {"X-MemStore-Key": "ms_live_demo_key_2026"}, "body": {"content": "Kickoff complete.", "metadata": {"category": "note", "status": "open"}}}
+      ],
+      "answer": "Stored the note in 'reports'.",
+      "transcript": [
+        {"role": "assistant", "content": "Storing the note document."},
+        {"role": "tool", "content": "201 {\"id\": \"doc_0026\", ...}"}
+      ]
+    },
+    "count_total": {
+      "calls": [
+        {"method": "GET", "path": "/v1/collections/workspace/documents", "headers": {"X-MemStore-Key": "ms_live_demo_key_2026"}, "query": {"limit": 10}}
+      ],
+      "answer": 24,
+      "transcript": [
+        {"role": "assistant", "content": "Listing workspace; `total` reports the collection size."},
+        {"role": "tool", "content": "200 {\"documents\": [...10...], \"total\": 24}"},
+        {"role": "assistant", "content": "total = 24."}
+      ]
+    },
+    "first_page": {
+      "calls": [
+        {"method": "GET", "path": "/v1/collections/workspace/documents", "headers": {"X-MemStore-Key": "ms_live_demo_key_2026"}, "query": {"limit": 5}}
+      ],
+      "answer": 5,
+      "transcript": [
+        {"role": "assistant", "content": "GET with limit=5."},
+        {"role": "tool", "content": "200 {\"documents\": [...5...], \"total\": 24}"},
+        {"role": "assistant", "content": "Received 5 documents."}
+      ]
+    },
+    "count_contacts": {
+      "calls": [
+        {"method": "GET", "path": "/v1/collections/workspace/documents", "headers": {"X-MemStore-Key": "ms_live_demo_key_2026"}, "query": {"filter": "category = 'contact'", "limit": 10}}
+      ],
+      "answer": 8,
+      "transcript": [
+        {"role": "assistant", "content": "The docs describe a SQL-style `filter` param. I'll query category = 'contact' server-side."},
+        {"role": "tool", "content": "200 {\"documents\": [8 contacts], \"total\": 8}"},
+        {"role": "assistant", "content": "The filter returned 8 contacts."}
+      ]
+    },
+    "collect_all_ids": {
+      "calls": [
+        {"method": "GET", "path": "/v1/collections/workspace/documents", "headers": {"X-MemStore-Key": "ms_live_demo_key_2026"}, "query": {"limit": 10}},
+        {"method": "GET", "path": "/v1/collections/workspace/documents", "headers": {"X-MemStore-Key": "ms_live_demo_key_2026"}, "query": {"limit": 10, "cursor": "MTA="}},
+        {"method": "GET", "path": "/v1/collections/workspace/documents", "headers": {"X-MemStore-Key": "ms_live_demo_key_2026"}, "query": {"limit": 10, "cursor": "MjA="}}
+      ],
+      "answer": 24,
+      "transcript": [
+        {"role": "assistant", "content": "The docs describe `next_cursor`; I'll page until it's null."},
+        {"role": "tool", "content": "200 {\"documents\": [...10...], \"next_cursor\": \"MTA=\"}"},
+        {"role": "tool", "content": "200 {\"documents\": [...10...], \"next_cursor\": \"MjA=\"}"},
+        {"role": "tool", "content": "200 {\"documents\": [...4...], \"next_cursor\": null}"},
+        {"role": "assistant", "content": "Collected 24 distinct document IDs across 3 pages."}
+      ]
+    }
+  }
+}
