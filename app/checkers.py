@@ -80,7 +80,9 @@ def check_store_contact(store: MemStore, answer: Any) -> tuple[bool, str]:
 def check_verify_credentials(store: MemStore, answer: Any) -> tuple[bool, str]:
     """Auth check: the agent must make an authenticated read and report the
     workspace document count. A 401 (wrong auth header) leaves it unable to
-    report the true count, so the self-report never matches ground truth."""
+    read the true count, so its self-report — whose first integer is parsed
+    here — typically surfaces the 401 (or another wrong number) rather than
+    the ground-truth count."""
     truth = len(_workspace(store))
     got = _as_int(answer)
     return got == truth, f"reported {got}, truth {truth} (auth)"

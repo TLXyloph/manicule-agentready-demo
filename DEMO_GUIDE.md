@@ -68,7 +68,7 @@ requiring a writer to notice it by hand.
 ### 3. Apply the patch → the jump
 
 Click **Apply doc patch & re-run.** This swaps `docs_gapped/` → `docs_fixed/` (the
-completed docs) and re-runs the identical agent + task suite. The result: **100% (8/8).**
+completed docs) and re-runs the identical agent + task suite. The result: **100% (12/12).**
 The success-rate meter jumps **+25**, and the three red tasks flip to green in place. The gap
 traces move to a "fixed" state showing exactly which doc section closed each gap.
 
@@ -120,7 +120,7 @@ Suggested beats, timestamped for a screen recording of the dashboard:
    filter buried in the codebase."
 4. **(0:55-1:15) The patch and the jump.** Click **Apply doc patch & re-run**. "Now I swap
    in the complete docs and re-run the identical agent on the identical tasks." Watch the
-   meter climb to **100% (8/8)** and the red tasks flip green. "That's Manicule's 0%-vs-25%
+   meter climb to **100% (12/12)** and the red tasks flip green. "That's Manicule's 0%-vs-25%
    number, reproduced live instead of asserted in a launch post."
 5. **(1:15-1:30) Close.** "Everything here — the mock API, the docs, the task suite — is
    synthetic and runs locally with no API key, so it's safe to demo on any prospect's call.
