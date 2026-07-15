@@ -10,6 +10,13 @@ recording never flakes mid-take.
 
 ## Setup
 
+**Fastest (no install):** open the live demo —
+https://claude.ai/code/artifact/4fb63ba8-ae81-4e32-b52f-9fdb1d8b78bb. It's a self-contained
+build (`site/index.html`) that replays the same run entirely in the browser, so the 75% → 100%
+jump is one click away with nothing to boot. The same file also opens directly: `open site/index.html`.
+
+**Full harness (local):**
+
 ```bash
 make install      # one-time: venv + deps
 make run          # http://localhost:8000
