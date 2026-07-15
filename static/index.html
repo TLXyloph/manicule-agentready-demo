@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AgentReady — Manicule</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo">◑</span>
+      <div>
+        <h1>AgentReady</h1>
+        <p class="tag">A live agent task-success metric that attributes every failure to a doc gap.</p>
+      </div>
+    </div>
+    <span id="mode-badge" class="badge">…</span>
+  </header>
+
+  <main>
+    <section class="meters">
+      <div class="meter" id="meter-gapped">
+        <div class="meter-label">Gapped docs</div>
+        <div class="dial"><span class="pct" data-pct>—</span></div>
+        <div class="meter-sub"><span data-passed>–</span>/<span data-total>–</span> tasks pass</div>
+      </div>
+
+      <div class="delta" id="delta">
+        <div class="delta-arrow">→</div>
+        <div class="delta-num" id="delta-num">+0</div>
+        <div class="delta-cap">success-rate jump</div>
+      </div>
+
+      <div class="meter faded" id="meter-fixed">
+        <div class="meter-label">Fixed docs <span class="pill">patched</span></div>
+        <div class="dial"><span class="pct" data-pct>—</span></div>
+        <div class="meter-sub"><span data-passed>–</span>/<span data-total>–</span> tasks pass</div>
+      </div>
+    </section>
+
+    <section class="controls">
+      <button id="btn-gapped" class="btn">▶ Run agent on gapped docs</button>
+      <button id="btn-fixed" class="btn btn-primary" disabled>✚ Apply doc patch &amp; re-run</button>
+      <button id="btn-reset" class="btn btn-ghost">↺ Reset</button>
+      <span id="status" class="status"></span>
+    </section>
+
+    <div class="grid-2">
+      <section class="panel">
+        <h2>Task suite <span class="hint">left dot = gapped · right dot = fixed</span></h2>
+        <ul id="task-grid" class="task-grid"></ul>
+      </section>
+
+      <section class="panel">
+        <h2>Gap traces <span class="hint">why the agent failed</span></h2>
+        <div id="gap-traces" class="gap-traces">
+          <p class="empty">Run the gapped suite to reveal the doc gaps behind each failure.</p>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
