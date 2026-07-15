@@ -49,6 +49,11 @@ def check_create_archive(store: MemStore, answer: Any) -> tuple[bool, str]:
     return ok, f"collection 'archive' exists: {ok}"
 
 
+def check_create_audit(store: MemStore, answer: Any) -> tuple[bool, str]:
+    ok = "audit" in store.collections
+    return ok, f"collection 'audit' exists: {ok}"
+
+
 def check_store_invoice(store: MemStore, answer: Any) -> tuple[bool, str]:
     docs = store.collections.get("reports", [])
     hit = [
@@ -66,6 +71,23 @@ def check_store_note(store: MemStore, answer: Any) -> tuple[bool, str]:
     return bool(hit), f"note docs in 'reports': {len(hit)}"
 
 
+def check_store_contact(store: MemStore, answer: Any) -> tuple[bool, str]:
+    docs = store.collections.get("reports", [])
+    hit = [d for d in docs if d["metadata"].get("category") == "contact"]
+    return bool(hit), f"contact docs in 'reports': {len(hit)}"
+
+
+def check_verify_credentials(store: MemStore, answer: Any) -> tuple[bool, str]:
+    """Auth check: the agent must make an authenticated read and report the
+    workspace document count. A 401 (wrong auth header) leaves it unable to
+    read the true count, so its self-report — whose first integer is parsed
+    here — typically surfaces the 401 (or another wrong number) rather than
+    the ground-truth count."""
+    truth = len(_workspace(store))
+    got = _as_int(answer)
+    return got == truth, f"reported {got}, truth {truth} (auth)"
+
+
 def check_count_total(store: MemStore, answer: Any) -> tuple[bool, str]:
     truth = len(_workspace(store))
     got = _as_int(answer)
@@ -74,6 +96,12 @@ def check_count_total(store: MemStore, answer: Any) -> tuple[bool, str]:
 
 def check_first_page(store: MemStore, answer: Any) -> tuple[bool, str]:
     truth = min(5, len(_workspace(store)))
+    got = _as_int(answer)
+    return got == truth, f"reported {got}, truth {truth}"
+
+
+def check_page_size_three(store: MemStore, answer: Any) -> tuple[bool, str]:
+    truth = min(3, len(_workspace(store)))
     got = _as_int(answer)
     return got == truth, f"reported {got}, truth {truth}"
 
@@ -93,10 +121,14 @@ def check_collect_all_ids(store: MemStore, answer: Any) -> tuple[bool, str]:
 CHECKERS: dict[str, Callable[[MemStore, Any], tuple[bool, str]]] = {
     "create_reports": check_create_reports,
     "create_archive": check_create_archive,
+    "create_audit": check_create_audit,
     "store_invoice": check_store_invoice,
     "store_note": check_store_note,
+    "store_contact": check_store_contact,
+    "verify_credentials": check_verify_credentials,
     "count_total": check_count_total,
     "first_page": check_first_page,
+    "page_size_three": check_page_size_three,
     "count_contacts": check_count_contacts,
     "collect_all_ids": check_collect_all_ids,
 }

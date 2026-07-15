@@ -3,8 +3,8 @@
 Runs the full pipeline in deterministic replay mode (NO Anthropic key required)
 and asserts the before/after jump:
 
-  * gapped docs  -> success rate strictly < 100% with at least 2 failing tasks,
-    every failure attributed to a named doc gap;
+  * gapped docs  -> success rate strictly < 100% with the three seeded tasks
+    failing (auth, filter, cursor), every failure attributed to a named doc gap;
   * fixed docs   -> 100%, with the previously-failing tasks now green.
 
 Must exit 0 with no ANTHROPIC_API_KEY set.
@@ -31,7 +31,8 @@ def test_gapped_run_scores_below_100():
     result = run_suite("gapped")
     assert result["mode"] == "replay"
     assert result["success_rate"] < 100.0, "gapped docs should not be a perfect run"
-    assert result["failed"] >= 2, "expected at least 2 tasks to fail on gapped docs"
+    assert result["failed"] == 3, "expected exactly 3 tasks to fail on gapped docs"
+    assert result["success_rate"] == 75.0, "gapped headline should be a clean 75%"
 
 
 def test_every_gapped_failure_is_attributed_to_a_named_gap():
@@ -42,6 +43,16 @@ def test_every_gapped_failure_is_attributed_to_a_named_gap():
         assert t["gap"] in GAPS, f"failure {t['id']} not attributed to a named gap"
     # the run-level summary surfaces those gaps for the dashboard trace panel.
     assert result["gaps"], "expected gap traces in the summary"
+
+
+def test_all_three_named_gaps_are_attributed():
+    result = run_suite("gapped")
+    attributed = {t["gap"] for t in result["tasks"] if not t["passed"]}
+    assert attributed == {
+        "auth-header-contradiction",
+        "undocumented-metadata-filter",
+        "missing-pagination-cursor",
+    }, "expected the auth, filter, and cursor gaps to each trace to a failure"
 
 
 def test_fixed_run_scores_100_and_flips_failures_green():

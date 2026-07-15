@@ -1,5 +1,5 @@
 {
-  "_comment": "Recorded run of the same agent against docs_fixed/. The completed docs expose the `filter` param and `next_cursor` pagination, so every task now passes. Executed for real against a fresh seeded MemStore by the harness.",
+  "_comment": "Recorded run of the same agent against docs_fixed/. The completed docs expose the correct X-MemStore-Key auth, the `filter` param and `next_cursor` pagination, so every task now passes. Executed for real against a fresh seeded MemStore by the harness.",
   "variant": "fixed",
   "model": "claude-sonnet-4-5",
   "runs": {
@@ -23,6 +23,16 @@
         {"role": "tool", "content": "201 {\"name\": \"archive\", \"created\": true}"}
       ]
     },
+    "create_audit": {
+      "calls": [
+        {"method": "POST", "path": "/v1/collections", "headers": {"X-MemStore-Key": "ms_live_demo_key_2026"}, "body": {"name": "audit"}}
+      ],
+      "answer": "Created collection 'audit'.",
+      "transcript": [
+        {"role": "assistant", "content": "POST /v1/collections {name: audit}."},
+        {"role": "tool", "content": "201 {\"name\": \"audit\", \"created\": true}"}
+      ]
+    },
     "store_invoice": {
       "calls": [
         {"method": "POST", "path": "/v1/collections/reports/documents", "headers": {"X-MemStore-Key": "ms_live_demo_key_2026"}, "body": {"content": "Invoice #2001 for Manicule — DevRel retainer.", "metadata": {"category": "invoice", "amount": 4200, "status": "unpaid"}}}
@@ -41,6 +51,27 @@
       "transcript": [
         {"role": "assistant", "content": "Storing the note document."},
         {"role": "tool", "content": "201 {\"id\": \"doc_0026\", ...}"}
+      ]
+    },
+    "store_contact": {
+      "calls": [
+        {"method": "POST", "path": "/v1/collections/reports/documents", "headers": {"X-MemStore-Key": "ms_live_demo_key_2026"}, "body": {"content": "Primary contact: Ada — [email protected].", "metadata": {"category": "contact", "status": "active"}}}
+      ],
+      "answer": "Stored the contact in 'reports'.",
+      "transcript": [
+        {"role": "assistant", "content": "Storing the contact document."},
+        {"role": "tool", "content": "201 {\"id\": \"doc_0027\", ...}"}
+      ]
+    },
+    "verify_credentials": {
+      "calls": [
+        {"method": "GET", "path": "/v1/collections/workspace/documents", "headers": {"X-MemStore-Key": "ms_live_demo_key_2026"}, "query": {"limit": 10}}
+      ],
+      "answer": "Credentials accepted. Authenticated with the X-MemStore-Key header; the workspace collection has 24 documents.",
+      "transcript": [
+        {"role": "assistant", "content": "The Authentication section says to pass the key in the X-MemStore-Key header. Sending that."},
+        {"role": "tool", "content": "200 {\"documents\": [...10...], \"total\": 24}"},
+        {"role": "assistant", "content": "Authenticated successfully; total = 24 documents."}
       ]
     },
     "count_total": {
@@ -63,6 +94,17 @@
         {"role": "assistant", "content": "GET with limit=5."},
         {"role": "tool", "content": "200 {\"documents\": [...5...], \"total\": 24}"},
         {"role": "assistant", "content": "Received 5 documents."}
+      ]
+    },
+    "page_size_three": {
+      "calls": [
+        {"method": "GET", "path": "/v1/collections/workspace/documents", "headers": {"X-MemStore-Key": "ms_live_demo_key_2026"}, "query": {"limit": 3}}
+      ],
+      "answer": 3,
+      "transcript": [
+        {"role": "assistant", "content": "GET with limit=3."},
+        {"role": "tool", "content": "200 {\"documents\": [...3...], \"total\": 24}"},
+        {"role": "assistant", "content": "Received 3 documents."}
       ]
     },
     "count_contacts": {
