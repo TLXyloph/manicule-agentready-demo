@@ -165,7 +165,7 @@
   </main>
 
   <footer>
-    Deterministic replay of a real Claude tool-use run (<code>claude-sonnet-4-5</code>) against a bundled synthetic MemStore API. Each call is executed for real against a fresh, seeded store; every pass/fail comes from a deterministic checker; every failure is attributed to a named section of <code>docs/api-reference.md</code>. The full harness — including the live-agent path (set <code>ANTHROPIC_API_KEY</code>) — is on GitHub.
+    Deterministic replay of a real Claude tool-use run (<code>claude-sonnet-4-5</code>) against a bundled synthetic MemStore API. Each call is executed for real against a fresh, seeded store; every pass/fail comes from a deterministic checker; every failure is attributed to a named section of <code>docs_gapped/api-reference.md</code>. The full harness — including the live-agent path (set <code>ANTHROPIC_API_KEY</code>) — is on GitHub.
   </footer>
 
 <script id="run-data" type="application/json">
@@ -185,7 +185,7 @@
         "id": "undocumented-metadata-filter",
         "capability": "filter",
         "title": "SQL-style metadata filter is undocumented",
-        "doc": "docs/api-reference.md",
+        "doc": "docs_gapped/api-reference.md",
         "symptom": "The `filter` query parameter is missing from the gapped docs, so the agent cannot query metadata server-side and only sees the first page — it under-counts.",
         "fix": "Documented the `filter` query param with SQL-style syntax and operators."
       },
@@ -193,7 +193,7 @@
         "id": "missing-pagination-cursor",
         "capability": "cursor",
         "title": "Pagination cursor field is missing",
-        "doc": "docs/api-reference.md",
+        "doc": "docs_gapped/api-reference.md",
         "symptom": "The `next_cursor` response field and `cursor` query param are absent from the gapped docs, so the agent never pages past the first results and misses most documents.",
         "fix": "Documented the `next_cursor` response field and the `cursor` query param."
       }
