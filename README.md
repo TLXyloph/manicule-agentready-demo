@@ -6,6 +6,10 @@ Manicule's marketing claim is sharp: with their docs approach, coding **agents p
 errors, versus failing ~25% of the time with other frameworks.** This repo turns that *slogan*
 into a **live, reproducible, per-gap-attributed metric.**
 
+**▶ Live demo (no install):** https://claude.ai/code/artifact/4fb63ba8-ae81-4e32-b52f-9fdb1d8b78bb —
+a self-contained build (`site/index.html`) that replays the real Claude tool-use run entirely in the
+browser, so the 75% → 100% jump is one click away with nothing to boot.
+
 ## The magic moment
 
 On one screen, a real Claude tool-use agent is turned loose on a bundled synthetic API
@@ -53,8 +57,13 @@ app/main.py       FastAPI: /v1 mock API, /api harness endpoints, /static dashboa
 tasks/tasks.json  8 concrete NL developer tasks
 docs_gapped/      deliberately missing/contradictory docs   docs_fixed/  the completed docs
 replay/*.json     recorded gapped & fixed runs for keyless deterministic replay
-static/           vanilla-JS dashboard (meters, task grid, gap-trace panel)
+static/           vanilla-JS dashboard (meters, task grid, gap-trace panel) served by FastAPI
+site/index.html   self-contained static build — same dashboard with run data embedded, no backend
 ```
+
+The `site/` build embeds the exact deterministic run output (`/api/run/gapped` and `/api/run/fixed`
+in replay mode) so it can be hosted anywhere static — GitHub Pages, or the live Artifact link above —
+while `static/` + FastAPI drive the full harness (including the live Claude path when a key is set).
 
 Live and replay share one execution path — only the *source* of the API calls differs (Claude vs.
 recorded fixture) — so the checker verdicts and success rates are identical either way.
