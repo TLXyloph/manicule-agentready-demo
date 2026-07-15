@@ -1,0 +1,63 @@
+{
+  "_comment": "8 concrete developer tasks. `requires` names the API capability the task needs; a task whose capability is undocumented in the current docs variant is expected to fail, and its failure is attributed to the named gap. Checkers live in app/checkers.py keyed by id.",
+  "tasks": [
+    {
+      "id": "create_reports",
+      "title": "Create a collection",
+      "instruction": "Create a new collection named 'reports'.",
+      "requires": "basic",
+      "expected": "collection 'reports' exists"
+    },
+    {
+      "id": "create_archive",
+      "title": "Create a second collection",
+      "instruction": "Create a new collection named 'archive'.",
+      "requires": "basic",
+      "expected": "collection 'archive' exists"
+    },
+    {
+      "id": "store_invoice",
+      "title": "Store an invoice document",
+      "instruction": "In the 'reports' collection, store a document with content 'Invoice #2001 for Manicule — DevRel retainer.' and metadata {\"category\": \"invoice\", \"amount\": 4200, \"status\": \"unpaid\"}.",
+      "requires": "basic",
+      "expected": "an invoice doc (amount 4200) exists in 'reports'"
+    },
+    {
+      "id": "store_note",
+      "title": "Store a note document",
+      "instruction": "In the 'reports' collection, store a document with content 'Kickoff complete.' and metadata {\"category\": \"note\", \"status\": \"open\"}.",
+      "requires": "basic",
+      "expected": "a note doc exists in 'reports'"
+    },
+    {
+      "id": "count_total",
+      "title": "Count all documents",
+      "instruction": "Report the total number of documents in the 'workspace' collection.",
+      "requires": "basic",
+      "expected": 24
+    },
+    {
+      "id": "first_page",
+      "title": "Read the first page",
+      "instruction": "List the 'workspace' collection with a page size (limit) of 5 and report how many documents you received in that page.",
+      "requires": "basic",
+      "expected": 5
+    },
+    {
+      "id": "count_contacts",
+      "title": "Count contacts (metadata filter)",
+      "instruction": "Report how many documents in the 'workspace' collection have metadata category equal to 'contact'. Use the API to answer precisely.",
+      "requires": "filter",
+      "gap": "undocumented-metadata-filter",
+      "expected": 8
+    },
+    {
+      "id": "collect_all_ids",
+      "title": "Paginate every document",
+      "instruction": "Retrieve EVERY document in the 'workspace' collection across all pages and report the total count of distinct document IDs you collected.",
+      "requires": "cursor",
+      "gap": "missing-pagination-cursor",
+      "expected": 24
+    }
+  ]
+}
