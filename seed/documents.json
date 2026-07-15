@@ -1,0 +1,34 @@
+{
+  "_comment": "Synthetic seed data for the MemStore mock. No real PII. Single 'workspace' collection with 24 documents across categories invoice/note/contact.",
+  "collections": [
+    {
+      "name": "workspace",
+      "documents": [
+        { "content": "Invoice #1001 for Acme Robotics — cloud compute, March.", "metadata": { "category": "invoice", "amount": 1200, "status": "paid", "author": "billing-bot" } },
+        { "content": "Invoice #1002 for Globex — annual support renewal.", "metadata": { "category": "invoice", "amount": 8400, "status": "unpaid", "author": "billing-bot" } },
+        { "content": "Invoice #1003 for Initech — onboarding services.", "metadata": { "category": "invoice", "amount": 300, "status": "paid", "author": "billing-bot" } },
+        { "content": "Invoice #1004 for Umbrella Corp — data migration.", "metadata": { "category": "invoice", "amount": 5600, "status": "unpaid", "author": "billing-bot" } },
+        { "content": "Invoice #1005 for Hooli — Q2 retainer.", "metadata": { "category": "invoice", "amount": 9500, "status": "paid", "author": "billing-bot" } },
+        { "content": "Invoice #1006 for Stark Industries — arc reactor telemetry.", "metadata": { "category": "invoice", "amount": 250, "status": "unpaid", "author": "billing-bot" } },
+        { "content": "Invoice #1007 for Wayne Enterprises — security audit.", "metadata": { "category": "invoice", "amount": 7200, "status": "paid", "author": "billing-bot" } },
+        { "content": "Invoice #1008 for Cyberdyne — R&D subscription.", "metadata": { "category": "invoice", "amount": 150, "status": "unpaid", "author": "billing-bot" } },
+        { "content": "Meeting note: kickoff with design team, agreed on IA milestones.", "metadata": { "category": "note", "status": "open", "author": "naman" } },
+        { "content": "Note: agents fail 25% of tasks when the metadata filter is undocumented.", "metadata": { "category": "note", "status": "open", "author": "shreyans" } },
+        { "content": "Retro note: shipped the audit tool in 7 minutes flat.", "metadata": { "category": "note", "status": "closed", "author": "naman" } },
+        { "content": "Note: remember to document the next_cursor pagination field.", "metadata": { "category": "note", "status": "open", "author": "shreyans" } },
+        { "content": "Standup note: verification pipeline green across all samples.", "metadata": { "category": "note", "status": "closed", "author": "naman" } },
+        { "content": "Note: X-MemStore-Key is the correct auth header, not Bearer.", "metadata": { "category": "note", "status": "open", "author": "shreyans" } },
+        { "content": "Planning note: zero-to-aha journey killed 70% of confusion.", "metadata": { "category": "note", "status": "closed", "author": "naman" } },
+        { "content": "Note: SQL-style filtering boosted answer success by 30%.", "metadata": { "category": "note", "status": "open", "author": "shreyans" } },
+        { "content": "Contact: Ada Lovelace, Head of Eng at Acme Robotics.", "metadata": { "category": "contact", "company": "Acme Robotics", "author": "crm-sync" } },
+        { "content": "Contact: Grace Hopper, CTO at Globex.", "metadata": { "category": "contact", "company": "Globex", "author": "crm-sync" } },
+        { "content": "Contact: Alan Turing, Founder at Initech.", "metadata": { "category": "contact", "company": "Initech", "author": "crm-sync" } },
+        { "content": "Contact: Katherine Johnson, VP Ops at Umbrella Corp.", "metadata": { "category": "contact", "company": "Umbrella Corp", "author": "crm-sync" } },
+        { "content": "Contact: Margaret Hamilton, Eng Lead at Hooli.", "metadata": { "category": "contact", "company": "Hooli", "author": "crm-sync" } },
+        { "content": "Contact: Dorothy Vaughan, Director at Stark Industries.", "metadata": { "category": "contact", "company": "Stark Industries", "author": "crm-sync" } },
+        { "content": "Contact: Hedy Lamarr, Advisor at Wayne Enterprises.", "metadata": { "category": "contact", "company": "Wayne Enterprises", "author": "crm-sync" } },
+        { "content": "Contact: Radia Perlman, Network Architect at Cyberdyne.", "metadata": { "category": "contact", "company": "Cyberdyne", "author": "crm-sync" } }
+      ]
+    }
+  ]
+}
