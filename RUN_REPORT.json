@@ -1,0 +1,53 @@
+{
+  "company": "Manicule",
+  "company_url": "https://manicule.dev/",
+  "run_id": "manicule-agentready-2026-07-14",
+  "generated_at": "2026-07-15T01:10:00Z",
+  "repo_url": "https://github.com/TLXyloph/manicule-agentready-demo",
+  "pr_url": "https://github.com/TLXyloph/manicule-agentready-demo/pull/1",
+  "visibility": "public",
+  "live_url": null,
+  "live_url_status": "not_deployed",
+  "run_instructions": "python -m venv .venv && source .venv/bin/activate && pip install -r requirements.txt && REPLAY_ONLY=1 uvicorn app.main:app --reload  then open http://127.0.0.1:8000  (deterministic replay mode needs no API key; set ANTHROPIC_API_KEY and REPLAY_ONLY=0 to run the live Claude tool-use agent). See DEMO_GUIDE.md.",
+  "wedge": "AgentReady harness — a live, reproducible agent task-success-rate metric that attributes each agent failure to a specific doc gap, and shows a before/after jump when the gap is patched.",
+  "magic_moment": "On one screen, a real Claude tool-use agent runs a suite of concrete developer tasks against a bundled synthetic MemStore API using only the provided docs. First run against deliberately-gapped docs scores ~75% task success, with each failure traced to a named doc gap (undocumented SQL-style metadata filter param, wrong auth header, missing pagination cursor field). Click 'Apply doc patch' to swap in the complete docs and re-run: the same agent now scores ~100%, the success-rate number climbs live, and every previously-failing task flips red -> green. Turns Manicule's '0% vs 25% agent error' marketing claim into a live, per-gap-attributed metric.",
+  "verified_before_after": { "gapped_success_rate": 75.0, "fixed_success_rate": 100.0 },
+  "evidence": [
+    "evidence/01_gapped_before.png",
+    "evidence/02_fixed_after.png"
+  ],
+  "gate": {
+    "tool": "no-mistakes",
+    "run_id": "01KXHKBQ3ZT60SV2A5D1735ZGR",
+    "outcome": "checks-passed",
+    "steps_passed": ["intent", "rebase", "review", "test", "document", "lint", "push", "pr", "ci"],
+    "tests": "11 passed (pytest, keyless smoke test asserts gapped < 100% and fixed == 100%)",
+    "note": "CI returned checks-passed: repo has no GitHub Actions workflow, so the monitor found no required checks and cleared green. PR #1 was merged into master."
+  },
+  "secrets_scan": "clean — no secrets in diff; .env and _local/ are git-ignored and untracked; only placeholder sk-ant-xxxx in .env.example",
+  "assets": {
+    "LICENSE": "MIT (references Manicule)",
+    "README.md": "present, references Manicule",
+    "DEMO_GUIDE.md": "present, Loom talking points + company hooks",
+    "SCRIPT.md": "present, 90-second spoken walkthrough",
+    "OUTREACH.md": "_local/OUTREACH.md (git-ignored, NOT committed)"
+  },
+  "known_gaps": [
+    "No live hosted URL: the dashboard is served by the FastAPI backend (POST /api/run/{variant}), so a static GitHub Pages deploy would require an ungated client-side rewrite, and no Python-host deploy token (Render/Fly/Railway) is configured. Fallback per architecture: ship repo + local run instructions.",
+    "Live Claude tool-use path exists but the shipped demo defaults to deterministic REPLAY_ONLY mode (cached agent traces in replay/*.json) so it runs with no API key; the live path is exercised only when ANTHROPIC_API_KEY is set and REPLAY_ONLY=0.",
+    "The doc 'fix' is a pre-authored fixture swap (docs_gapped/ -> docs_fixed/), not LLM-generated on the fly.",
+    "Single bundled synthetic API (MemStore) only; arbitrary user-uploaded OpenAPI specs are out of scope.",
+    "Task suite is ~10 tasks; gap attribution is rule-based + LLM-judge on that fixed suite."
+  ],
+  "outreach": {
+    "email_file": "_local/OUTREACH.md (git-ignored)",
+    "primary_route": "founders@manicule.dev",
+    "contacts": [
+      "founders@manicule.dev",
+      "team@manicule.dev",
+      "https://x.com/manicule",
+      "Naman Bansal (CEO) @namanbansal0611",
+      "Shreyans Jain @shreyansj"
+    ]
+  }
+}
