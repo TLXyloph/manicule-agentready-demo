@@ -34,7 +34,10 @@
 
 > "That's AgentRel as a metric a customer can watch climb — and every task is
 > verified against real API side effects, not the agent's word. It drops straight
-> into Manicule's Audit and Code-Verification steps."
+> into Manicule's Audit and Code-Verification steps, and it's built around exactly
+> the Seed+ API-first startups Manicule already sells to — Supermemory, Greptile,
+> Reducto — where 'does the agent get it right from the docs alone' is the whole
+> ballgame."
 
 ---
 
