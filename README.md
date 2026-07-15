@@ -62,11 +62,18 @@ recorded fixture) — so the checker verdicts and success rates are identical ei
 ## Why this maps to Manicule
 
 - It is the **AgentRel thesis made measurable**: docs optimized for agents, scored by whether an
-  agent actually succeeds.
+  agent actually succeeds — not a vibe, a number that moves on screen.
 - The hidden gap in the demo — an **undocumented SQL-style metadata filter** — is a direct nod to
-  the Supermemory case study, where Manicule found SQL-based metadata filtering missing from the docs.
-- It plugs into Manicule's **Audit** and **Code Verification** pipeline steps: point the harness at
-  docs + API, get a task-success rate and the exact gaps that caused each failure.
+  the Supermemory case study, where Manicule's writer found SQL-based metadata filtering missing
+  from the docs by reading the codebase directly, exactly the kind of gap an Agent-Led Audit is
+  meant to catch.
+- It plugs into Manicule's own **Agent-Led Audit** and **Agent-Led Code Verification** pipeline
+  steps: point the harness at a client's docs + API (MemStore here stands in for a real ICP
+  target — a Seed+ developer-infrastructure startup like Supermemory, Greptile, or Reducto), and
+  get a task-success rate plus the exact gaps that caused each failure, instead of a slogan.
+- It gives Manicule's sales motion a receipt for its sharpest claim — "agents perform no errors
+  with our approach vs. failing 25% of the time with other frameworks" — by reproducing that exact
+  0%-vs-25%-shaped delta live, per gap, against a docs set Manicule itself didn't write.
 
 See [`DEMO_GUIDE.md`](DEMO_GUIDE.md) for the full narrative and [`SCRIPT.md`](SCRIPT.md) for the
 90-second walkthrough.
