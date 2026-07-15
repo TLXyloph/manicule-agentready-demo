@@ -20,7 +20,7 @@ GAPS: dict[str, dict[str, str]] = {
         "id": "undocumented-metadata-filter",
         "capability": "filter",
         "title": "SQL-style metadata filter is undocumented",
-        "doc": "docs/api-reference.md",
+        "doc": "docs_gapped/api-reference.md",
         "symptom": "The `filter` query parameter is missing from the gapped docs, "
         "so the agent cannot query metadata server-side and only sees the first "
         "page — it under-counts.",
@@ -30,7 +30,7 @@ GAPS: dict[str, dict[str, str]] = {
         "id": "missing-pagination-cursor",
         "capability": "cursor",
         "title": "Pagination cursor field is missing",
-        "doc": "docs/api-reference.md",
+        "doc": "docs_gapped/api-reference.md",
         "symptom": "The `next_cursor` response field and `cursor` query param are "
         "absent from the gapped docs, so the agent never pages past the first "
         "results and misses most documents.",
@@ -40,9 +40,9 @@ GAPS: dict[str, dict[str, str]] = {
         "id": "auth-header-contradiction",
         "capability": "auth",
         "title": "Auth header prose contradicts the working example",
-        "doc": "docs/overview.md",
-        "symptom": "The gapped overview tells the agent to use `Authorization: Bearer`, "
-        "which the server rejects with 401; only the code sample uses the correct "
+        "doc": "docs_gapped/overview.md",
+        "symptom": "The gapped overview presents `Authorization: Bearer` as the canonical "
+        "auth method, which the server rejects with 401; the API actually requires the "
         "`X-MemStore-Key` header.",
         "fix": "Corrected the auth prose to `X-MemStore-Key` so it matches the example.",
     },

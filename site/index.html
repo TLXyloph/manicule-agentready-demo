@@ -165,7 +165,7 @@
   </main>
 
   <footer>
-    Deterministic replay of a real Claude tool-use run (<code>claude-sonnet-4-5</code>) against a bundled synthetic MemStore API. Each call is executed for real against a fresh, seeded store; every pass/fail comes from a deterministic checker; every failure is attributed to a named section of <code>docs_gapped/api-reference.md</code>. The full harness — including the live-agent path (set <code>ANTHROPIC_API_KEY</code>) — is on GitHub.
+    Deterministic replay of a real Claude tool-use run (<code>claude-sonnet-4-5</code>) against a bundled synthetic MemStore API. Each call is executed for real against a fresh, seeded store; every pass/fail comes from a deterministic checker; every failure is attributed to a named section of the gapped docs (<code>docs_gapped/overview.md</code> + <code>docs_gapped/api-reference.md</code>). The full harness — including the live-agent path (set <code>ANTHROPIC_API_KEY</code>) — is on GitHub.
   </footer>
 
 <script id="run-data" type="application/json">
@@ -178,9 +178,17 @@
   },
   "gapped": {
     "success_rate": 75.0,
-    "passed": 6,
-    "total": 8,
+    "passed": 9,
+    "total": 12,
     "gaps": [
+      {
+        "id": "auth-header-contradiction",
+        "capability": "auth",
+        "title": "Auth header prose contradicts the working example",
+        "doc": "docs_gapped/overview.md",
+        "symptom": "The gapped overview presents `Authorization: Bearer` as the canonical auth method, which the server rejects with 401 — the API actually requires the `X-MemStore-Key` header.",
+        "fix": "Corrected the auth prose to `X-MemStore-Key` so it matches the working example."
+      },
       {
         "id": "undocumented-metadata-filter",
         "capability": "filter",
@@ -218,6 +226,15 @@
         "gap": null
       },
       {
+        "id": "create_audit",
+        "title": "Create an audit collection",
+        "requires": "basic",
+        "expected": "collection 'audit' exists",
+        "answer": "Created collection 'audit'.",
+        "passed": true,
+        "gap": null
+      },
+      {
         "id": "store_invoice",
         "title": "Store an invoice document",
         "requires": "basic",
@@ -236,6 +253,24 @@
         "gap": null
       },
       {
+        "id": "store_contact",
+        "title": "Store a contact document",
+        "requires": "basic",
+        "expected": "a contact doc exists in 'reports'",
+        "answer": "Stored the contact in 'reports'.",
+        "passed": true,
+        "gap": null
+      },
+      {
+        "id": "verify_credentials",
+        "title": "Verify API credentials (auth)",
+        "requires": "auth",
+        "expected": 24,
+        "answer": "Auth failed — server rejected the Bearer token with 401.",
+        "passed": false,
+        "gap": "auth-header-contradiction"
+      },
+      {
         "id": "count_total",
         "title": "Count all documents",
         "requires": "basic",
@@ -250,6 +285,15 @@
         "requires": "basic",
         "expected": 5,
         "answer": 5,
+        "passed": true,
+        "gap": null
+      },
+      {
+        "id": "page_size_three",
+        "title": "Read a smaller page",
+        "requires": "basic",
+        "expected": 3,
+        "answer": 3,
         "passed": true,
         "gap": null
       },
@@ -275,8 +319,8 @@
   },
   "fixed": {
     "success_rate": 100.0,
-    "passed": 8,
-    "total": 8,
+    "passed": 12,
+    "total": 12,
     "gaps": [],
     "tasks": [
       {
@@ -294,6 +338,15 @@
         "requires": "basic",
         "expected": "collection 'archive' exists",
         "answer": "Created collection 'archive'.",
+        "passed": true,
+        "gap": null
+      },
+      {
+        "id": "create_audit",
+        "title": "Create an audit collection",
+        "requires": "basic",
+        "expected": "collection 'audit' exists",
+        "answer": "Created collection 'audit'.",
         "passed": true,
         "gap": null
       },
@@ -316,6 +369,24 @@
         "gap": null
       },
       {
+        "id": "store_contact",
+        "title": "Store a contact document",
+        "requires": "basic",
+        "expected": "a contact doc exists in 'reports'",
+        "answer": "Stored the contact in 'reports'.",
+        "passed": true,
+        "gap": null
+      },
+      {
+        "id": "verify_credentials",
+        "title": "Verify API credentials (auth)",
+        "requires": "auth",
+        "expected": 24,
+        "answer": "Credentials accepted (X-MemStore-Key); workspace has 24 documents.",
+        "passed": true,
+        "gap": null
+      },
+      {
         "id": "count_total",
         "title": "Count all documents",
         "requires": "basic",
@@ -330,6 +401,15 @@
         "requires": "basic",
         "expected": 5,
         "answer": 5,
+        "passed": true,
+        "gap": null
+      },
+      {
+        "id": "page_size_three",
+        "title": "Read a smaller page",
+        "requires": "basic",
+        "expected": 3,
+        "answer": 3,
         "passed": true,
         "gap": null
       },

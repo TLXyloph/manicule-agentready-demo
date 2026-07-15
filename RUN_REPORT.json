@@ -11,8 +11,8 @@
   "live_url_note": "Self-contained client-side build (site/index.html) published as a live Artifact. Replays the real deterministic Claude tool-use run in-browser with no backend; shows the 75% -> 100% before/after jump on one click. The Artifact is private until shared from its page.",
   "run_instructions": "Fastest: open the live_url. Locally (full harness): python -m venv .venv && source .venv/bin/activate && pip install -r requirements.txt && REPLAY_ONLY=1 uvicorn app.main:app --reload  then open http://127.0.0.1:8000  (deterministic replay mode needs no API key; set ANTHROPIC_API_KEY and REPLAY_ONLY=0 to run the live Claude tool-use agent). The static build also opens directly: open site/index.html. See DEMO_GUIDE.md.",
   "wedge": "AgentReady harness — a live, reproducible agent task-success-rate metric that attributes each agent failure to a specific doc gap, and shows a before/after jump when the gap is patched.",
-  "magic_moment": "On one screen, a real Claude tool-use agent runs a suite of concrete developer tasks against a bundled synthetic MemStore API using only the provided docs. First run against deliberately-gapped docs scores ~75% task success, with each failure traced to a named doc gap (undocumented SQL-style metadata filter param, wrong auth header, missing pagination cursor field). Click 'Apply doc patch' to swap in the complete docs and re-run: the same agent now scores ~100%, the success-rate number climbs live, and every previously-failing task flips red -> green. Turns Manicule's '0% vs 25% agent error' marketing claim into a live, per-gap-attributed metric.",
-  "verified_before_after": { "gapped_success_rate": 75.0, "fixed_success_rate": 100.0 },
+  "magic_moment": "On one screen, a real Claude tool-use agent runs a 12-task suite of concrete developer tasks against a bundled synthetic MemStore API using only the provided docs. First run against deliberately-gapped docs scores exactly 75% task success (9/12), with each of the 3 failures traced to a specific named doc gap: a wrong auth header (overview prose says 'Authorization: Bearer', server requires 'X-MemStore-Key' -> 401), an undocumented SQL-style metadata filter param, and a missing pagination cursor field. Click 'Apply doc patch' to swap in the complete docs and re-run: the same agent now scores 100% (12/12), the success-rate number climbs live, and every previously-failing task flips red -> green. Turns Manicule's '0% vs 25% agent error' marketing claim into a live, per-gap-attributed metric.",
+  "verified_before_after": { "gapped_success_rate": 75.0, "fixed_success_rate": 100.0, "tasks_total": 12, "tasks_failing_gapped": 3, "named_gaps": ["auth-header-contradiction", "undocumented-metadata-filter", "missing-pagination-cursor"] },
   "evidence": [
     "evidence/01_gapped_before.png",
     "evidence/02_fixed_after.png"
@@ -44,7 +44,7 @@
     "Live Claude tool-use path exists but the shipped demo defaults to deterministic REPLAY_ONLY mode (cached agent traces in replay/*.json) so it runs with no API key; the live path is exercised only when ANTHROPIC_API_KEY is set and REPLAY_ONLY=0.",
     "The doc 'fix' is a pre-authored fixture swap (docs_gapped/ -> docs_fixed/), not LLM-generated on the fly.",
     "Single bundled synthetic API (MemStore) only; arbitrary user-uploaded OpenAPI specs are out of scope.",
-    "Task suite is ~10 tasks; gap attribution is rule-based + LLM-judge on that fixed suite."
+    "Task suite is 12 fixed tasks (9 pass / 3 fail on the gapped docs); gap attribution is rule-based (capability -> named gap) with an optional LLM-judge fallback only when a live key is present."
   ],
   "outreach": {
     "email_file": "_local/OUTREACH.md (git-ignored)",

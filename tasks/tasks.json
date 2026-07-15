@@ -1,5 +1,5 @@
 {
-  "_comment": "8 concrete developer tasks. `requires` names the API capability the task needs; a task whose capability is undocumented in the current docs variant is expected to fail, and its failure is attributed to the named gap. Checkers live in app/checkers.py keyed by id.",
+  "_comment": "12 concrete developer tasks. `requires` names the API capability the task needs; a task whose capability is undocumented or contradicted in the current docs variant is expected to fail, and its failure is attributed to the named gap. Checkers live in app/checkers.py keyed by id. Tasks run in order against one seeded store, so collection-creation tasks precede the stores that target them.",
   "tasks": [
     {
       "id": "create_reports",
@@ -16,6 +16,13 @@
       "expected": "collection 'archive' exists"
     },
     {
+      "id": "create_audit",
+      "title": "Create an audit collection",
+      "instruction": "Create a new collection named 'audit'.",
+      "requires": "basic",
+      "expected": "collection 'audit' exists"
+    },
+    {
       "id": "store_invoice",
       "title": "Store an invoice document",
       "instruction": "In the 'reports' collection, store a document with content 'Invoice #2001 for Manicule — DevRel retainer.' and metadata {\"category\": \"invoice\", \"amount\": 4200, \"status\": \"unpaid\"}.",
@@ -30,6 +37,21 @@
       "expected": "a note doc exists in 'reports'"
     },
     {
+      "id": "store_contact",
+      "title": "Store a contact document",
+      "instruction": "In the 'reports' collection, store a document with content 'Primary contact: Ada — [email protected].' and metadata {\"category\": \"contact\", \"status\": \"active\"}.",
+      "requires": "basic",
+      "expected": "a contact doc exists in 'reports'"
+    },
+    {
+      "id": "verify_credentials",
+      "title": "Verify API credentials (auth)",
+      "instruction": "Following ONLY the Authentication section of the overview, authenticate against the API, then make one authenticated request that reads the 'workspace' collection and report the total number of documents it contains. If the server rejects your credentials, say so.",
+      "requires": "auth",
+      "gap": "auth-header-contradiction",
+      "expected": 24
+    },
+    {
       "id": "count_total",
       "title": "Count all documents",
       "instruction": "Report the total number of documents in the 'workspace' collection.",
@@ -42,6 +64,13 @@
       "instruction": "List the 'workspace' collection with a page size (limit) of 5 and report how many documents you received in that page.",
       "requires": "basic",
       "expected": 5
+    },
+    {
+      "id": "page_size_three",
+      "title": "Read a smaller page",
+      "instruction": "List the 'workspace' collection with a page size (limit) of 3 and report how many documents you received in that page.",
+      "requires": "basic",
+      "expected": 3
     },
     {
       "id": "count_contacts",

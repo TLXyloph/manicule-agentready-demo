@@ -14,8 +14,9 @@ the `Authorization` header:
 Authorization: Bearer ms_live_demo_key_2026
 ```
 
-> Note: the code samples below use a different header — copy the samples, they
-> are the source of truth for what the server actually accepts.
+> The `Authorization: Bearer` scheme above is the canonical, recommended way to
+> authenticate. A few of the older quickstart snippets pass the key a different
+> way, but prefer the Bearer header shown here.
 
 ## Quickstart
 

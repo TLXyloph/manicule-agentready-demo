@@ -13,15 +13,17 @@
 **[0:12–0:35] The before**
 
 > "Here's a real Claude tool-use agent, turned loose on a mock API with only the
-> docs as context. It runs eight concrete developer tasks. Against the *gapped*
-> docs it scores seventy-five percent — two tasks fail." *(point at the red dots)*
+> docs as context. It runs twelve concrete developer tasks. Against the *gapped*
+> docs it scores seventy-five percent — three tasks fail." *(point at the red dots)*
 
 **[0:35–0:58] The attribution**
 
 > "And crucially, it tells you *why*. This panel traces each failure to a specific
-> doc gap: the SQL-style metadata filter is undocumented, so the agent can't query
-> contacts server-side and under-counts. Pagination's `next_cursor` field is
-> missing, so it never gets past the first page. This is the exact class of gap
+> doc gap: the auth section names the wrong header — `Bearer` instead of
+> `X-MemStore-Key` — so the credential check 401s. The SQL-style metadata filter is
+> undocumented, so the agent can't query contacts server-side and under-counts.
+> Pagination's `next_cursor` field is missing, so it never gets past the first
+> page. This is the exact class of gap
 > Manicule found in the Supermemory docs."
 
 **[0:58–1:20] The jump**

@@ -43,7 +43,7 @@ A **deterministic replay mode** (`REPLAY_ONLY=1`, or simply no key set) reproduc
 before/after result with no live API key, so the demo never flakes.
 
 ```bash
-make smoke     # keyless: asserts gapped < 100% (>=2 fail) and fixed == 100%
+make smoke     # keyless: asserts gapped == 75% (3 fail: auth/filter/cursor) and fixed == 100%
 make test      # full suite: mock-API unit tests + the end-to-end smoke test
 ```
 
@@ -56,7 +56,7 @@ app/checkers.py   deterministic per-task checkers — inspect real store side ef
 app/scoring.py    gap-attribution: capability -> named doc gap rule table (+ optional LLM-judge fallback)
 app/harness.py    executes each task's calls against a fresh seeded store, checks, scores; live OR replay
 app/main.py       FastAPI: /v1 mock API, /api harness endpoints, /static dashboard
-tasks/tasks.json  8 concrete NL developer tasks
+tasks/tasks.json  12 concrete NL developer tasks (9 pass / 3 fail on the gapped docs)
 docs_gapped/      deliberately missing/contradictory docs   docs_fixed/  the completed docs
 replay/*.json     recorded gapped & fixed runs for keyless deterministic replay
 static/           vanilla-JS dashboard (meters, task grid, gap-trace panel) served by FastAPI
