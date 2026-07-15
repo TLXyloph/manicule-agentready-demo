@@ -19,7 +19,7 @@ On one screen, a real Claude tool-use agent is turned loose on a bundled synthet
 concrete developer tasks — reading **only the provided docs** as context.
 
 1. **First run — against `docs_gapped/`** (deliberately missing/contradictory sections): the agent
-   scores **~70-80%**. At least two tasks fail. Each failure is traced to a **specific doc gap**
+   scores **~75%**. Three tasks fail. Each failure is traced to a **specific doc gap**
    (e.g. an undocumented SQL-style metadata filter, a wrong auth header, a missing pagination cursor).
 2. You click **"Apply doc patch"** — this swaps `docs_gapped/` → `docs_fixed/`, filling exactly
    those gaps.

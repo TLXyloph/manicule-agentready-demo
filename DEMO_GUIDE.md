@@ -86,8 +86,9 @@ count against ground truth recomputed live from the store. The agent cannot pass
 
 ```bash
 make smoke
-# asserts: gapped success-rate < 100% with >=2 failures, each attributed to a
-# named gap; fixed == 100%; previously-failing tasks turn green. Exits 0, no key.
+# asserts: gapped success-rate == 75% with exactly 3 failures (auth/filter/cursor),
+# each attributed to a named gap; fixed == 100%; previously-failing tasks turn
+# green. Exits 0, no key.
 ```
 
 ## Where this plugs into Manicule
